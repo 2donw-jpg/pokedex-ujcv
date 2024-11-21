@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
-import { View, Text, StyleSheet, Pressable, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, ScrollView, Alert, Platform } from 'react-native';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { getUserProfile } from '@/services/dbService';
@@ -56,32 +56,39 @@ const Home = () => {
   };
 
   return (
-    <>
+    <View style={styles.container}>
       {/* Button to scan here */}
       <Pressable onPress={() => router.push('/scanner')}>
         <Text style={styles.scanButton}>Scan here</Text>
       </Pressable>
 
       {/* Pokémon list */}
-      <SafeAreaView>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {pokemonList.map((pokemon, index) => (
-            <Pressable key={pokemon.name} onPress={() => handlePress(index + 1)}>
-              <PokemonList codigo={index + 1} pokemons={pokemon} />
-            </Pressable>
-          ))}
-        </ScrollView>
-      </SafeAreaView>
-    </>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+        {pokemonList.map((pokemon, index) => (
+          <Pressable key={pokemon.name} onPress={() => handlePress(index + 1)}>
+            <PokemonList codigo={index + 1} pokemons={pokemon} />
+          </Pressable>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f8f8f8',
+  },
   scanButton: {
     fontSize: 18,
     color: '#3498db',
     textAlign: 'center',
     marginVertical: 16,
+  },
+  scrollViewContainer: {
+    flexGrow: 1, // Ensures that the content stretches beyond the screen if needed
+    paddingBottom: 16, // Provides extra space for the bottom of the list
   },
   pokemonPressable: {
     padding: 12,

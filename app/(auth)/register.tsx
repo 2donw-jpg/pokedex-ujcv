@@ -15,12 +15,12 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     try {
       const email = username.concat("@pokemon.edu");
-      await register(email, password, username); // Assume the register function returns a promise
+      await register(email, password, username);
       router.push('/pokemons');
     } catch (error) {
-      if (error && error.code) {
+        const errorCode = error.code;
         // Handle specific Firebase auth errors
-        switch (error.code) {
+        switch (errorCode) {
           case 'auth/invalid-email':
             Alert.alert("Error", "El nombre de usuario tiene un formato incorrecto");
             break;
@@ -36,9 +36,6 @@ const Register: React.FC = () => {
           default:
             Alert.alert("Error", "Ha ocurrido un error, por favor intenta nuevamente.");
         }
-      } else {
-        Alert.alert("Error", "Ha ocurrido un error desconocido.");
-      }
     }
   };
 

@@ -20,13 +20,10 @@ const Ranking = () => {
 
   useEffect(() => {
     fetchScores(); // Fetch scores on component mount
-  }, []);
+  }, );
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.refreshButton} onPress={fetchScores}>
-        <Text style={styles.refreshText}>Refresh</Text>
-      </TouchableOpacity>
 
       <View style={styles.divider} />
       <Text style={styles.title}>Ranking</Text>

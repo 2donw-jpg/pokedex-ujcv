@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   Text,
   View,
@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Animated,
   Easing,
+  BackHandler
 } from "react-native";
 import axios from "axios";
 import Poke from "../types/Pokemon";
@@ -29,6 +30,16 @@ const Details = () => {
 
   // Animación de rotación
   const rotation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const backAction = () => {
+      router.push('/(profile)/pokemons'); // Navigate to the specific route
+      return true; // Block the default back action
+    };
+  
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove(); // Clean up on unmount
+  }, []);
 
   useEffect(() => {
     // Iniciar la animación de rotación cuando el componente se monte

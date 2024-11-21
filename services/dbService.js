@@ -76,7 +76,7 @@ export async function addCaughtPokemon(pokemonId) {
 
       // Calculate the points for the caught Pokémon
       const pokemonPoints = getPokemonPoints(pokemonId);
-
+      
       // Update the trainer's data with the new Pokémon and updated points
       await updateDoc(trainerDocRef, {
         pokemons: arrayUnion(pokemonId),
